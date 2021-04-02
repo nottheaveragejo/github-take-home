@@ -7,4 +7,9 @@ module.exports = function(app) {
   //list all customers
   app.get('/api/customers', customers.listAllProducts)
 
+  //add warehouse
+  app.post('/api/warehouses', customers.addWareHouse);
+  //list all warehouses
+  app.get('/api/warehouses', customers.listAllWareHouses)
+
 }

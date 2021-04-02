@@ -3,66 +3,46 @@
 let products = {
   product1 : {
     id: 1,
-    name: "nike"
+    name: "nike",
+    quantity:50
   },
   product2 : {
     id: 2,
-    name: "givenchy"
+    name: "givenchy",
+    quantity:500
   },
   product3 : {
     id: 3,
-    name: "chanel"
+    name: "chanel",
+    quantity:5000
   },
 }
 
 let warehouses = {
   warehouse1 :{
     id : 1,
-    products: {
-      product1 : {
-        id: 1,
-        name: "nike",
-        qty: 100,
-      },
-      product2 : {
-        id: 2,
-        name: "givenchy",
-        qty: 300
-      },
-    }
+    storage: [
+      products["product1"] ,
+      products["product2"]
+    ]
   },
   warehouse2 :{
     id : 2,
-    products: {
-      product1 : {
-        id: 1,
-        name: "nike",
-        qty: 50,
-      },
-      product2 : {
-        id: 2,
-        name: "givenchy",
-        qty: 10
-      },
-    }
+    storage: ["product2"]
   },
   warehouse3 :{
     id : 3,
-    products: {
-      product1 : {
-        id: 1,
-        name: "nike",
-        qty: 10,
-      },
-    }
+    storage: products['product3']
   },
 
 }
 //add a new product
 exports.addProduct = function(req, res) {
   let newProduct = req.body;
+  if(products["product" + newProduct.id] == null){
   products["product" + newProduct.id] = newProduct;
   res.end("Post Successfully: \n" + JSON.stringify(newProduct, null, 4));
+  }
 };
 
 //list all products
@@ -75,9 +55,11 @@ exports.listAllProducts = function(req, res) {
 //add a new warehouse
 exports.addWareHouse = function(req, res) {
   let newWareHouse = req.body;
+  if(warehouses["warehouse" + newWareHouse.id] == null){
   warehouses["warehouse" + newWareHouse.id] = newWareHouse;
 	console.log("--->After Post, warehouses:\n" + JSON.stringify(warehouses, null, 4));
   res.end("Post Successfully: \n" + JSON.stringify(newWareHouse, null, 4));
+  }
 };
 
 //get info for specific warehouse
@@ -91,6 +73,8 @@ exports.listAllWareHouses = function(req, res) {
     res.end("All products: \n" + JSON.stringify(warehouses, null, 4));
 };
 
+
+
 //update stock quantity at a certain warehouse
 exports.unStock = function(req, res) {
   let id = parseInt(req.params.id);
@@ -98,8 +82,8 @@ exports.unStock = function(req, res) {
   let updatedStock =req.body
   console.log(req.params,req.body, "update")
   if(warehouses["warehouse" + id] != null &&
-  warehouses["warehouse" + id]['products']["product" + productId] != null &&
-  products["product" + productId] != null
+  warehouses["warehouse" + id]['storage'][products["product" + productId]] != null &&
+  products["product" + productId]['quantity'] != 0
    ){
     // update data
     let newstock =warehouses["warehouse" + id]['products']["product" + productId]['qty'] -

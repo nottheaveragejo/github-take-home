@@ -17,7 +17,7 @@ module.exports = function(app) {
   app.get('/api/warehouses', controllers.listAllWareHouses)
 
   //update stock
-    app.put('/api/warehouses/:id/:productId', controllers.unstock);
+    app.put('/api/warehouses/:id/:productId', controllers.unStock);
 }
 
 

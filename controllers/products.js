@@ -58,7 +58,6 @@ let warehouses = {
   },
 
 }
-
 //add a new product
 exports.addProduct = function(req, res) {
   let newProduct = req.body;
@@ -84,12 +83,32 @@ exports.addWareHouse = function(req, res) {
 //get info for specific warehouse
 exports.getOneWareHouse= function(req, res) {
   let warehouse = warehouses["warehouse" + req.params.id];
-  console.log(req.params.id, "test")
   res.end( "Find a warehouse:\n" + JSON.stringify(warehouse, null, 12));
 }
 
 //list all warehouses
 exports.listAllWareHouses = function(req, res) {
-    console.log("All products" + JSON.stringify(warehouses, null, 4));
     res.end("All products: \n" + JSON.stringify(warehouses, null, 4));
+};
+
+//update stock quantity at a certain warehouse
+exports.unStock = function(req, res) {
+  let id = parseInt(req.params.id);
+  let productId = req.params.productId
+  let updatedStock =req.body
+  console.log(req.params,req.body, "update")
+  if(warehouses["warehouse" + id] != null &&
+  warehouses["warehouse" + id]['products']["product" + productId] != null &&
+  products["product" + productId] != null
+   ){
+    // update data
+    let newstock =warehouses["warehouse" + id]['products']["product" + productId]['qty'] -
+    updatedStock
+    if(newstock <0){
+      newstock = 0
+    }
+		res.end("Update Successfully! \n" + JSON.stringify(newstock, null, 4));
+	}else{
+		res.end("Don't Exist Customer:\n:" + JSON.stringify(newstock, null, 4));
+	}
 };

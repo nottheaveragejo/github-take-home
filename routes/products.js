@@ -3,9 +3,9 @@ module.exports = function(app) {
   ('../controllers/products.js')
 
   //add customer
-  app.post('/api/controllers', controllers.addProduct);
+  app.post('/api/products', controllers.addProduct);
   //list all controllers
-  app.get('/api/controllers', controllers.listAllProducts)
+  app.get('/api/products', controllers.listAllProducts)
 
   //add warehouse
   app.post('/api/warehouses', controllers.addWareHouse);
@@ -16,4 +16,8 @@ module.exports = function(app) {
   //list all warehouses
   app.get('/api/warehouses', controllers.listAllWareHouses)
 
+  //update stock
+    app.put('/api/warehouses/:id/:productId', controllers.unstock);
 }
+
+

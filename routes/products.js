@@ -1,15 +1,19 @@
 module.exports = function(app) {
-  let customers = require
+  let controllers = require
   ('../controllers/products.js')
 
   //add customer
-  app.post('/api/customers', customers.addProduct);
-  //list all customers
-  app.get('/api/customers', customers.listAllProducts)
+  app.post('/api/controllers', controllers.addProduct);
+  //list all controllers
+  app.get('/api/controllers', controllers.listAllProducts)
 
   //add warehouse
-  app.post('/api/warehouses', customers.addWareHouse);
+  app.post('/api/warehouses', controllers.addWareHouse);
+
+  //get individual warehouse info by id
+  app.get('/api/warehouses/:id', controllers.getOneWareHouse)
+
   //list all warehouses
-  app.get('/api/warehouses', customers.listAllWareHouses)
+  app.get('/api/warehouses', controllers.listAllWareHouses)
 
 }

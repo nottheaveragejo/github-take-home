@@ -62,10 +62,8 @@ let warehouses = {
 //add a new product
 exports.addProduct = function(req, res) {
   let newProduct = req.body;
-  //update the data set with the newly create product
-    products["product" + newProduct.id] = newProduct;
-	console.log("--->After Post, products:\n" + JSON.stringify(products, null, 4));
-    res.end("Post Successfully: \n" + JSON.stringify(newProduct, null, 4));
+  products["product" + newProduct.id] = newProduct;
+  res.end("Post Successfully: \n" + JSON.stringify(newProduct, null, 4));
 };
 
 //list all products
@@ -80,8 +78,15 @@ exports.addWareHouse = function(req, res) {
   let newWareHouse = req.body;
   warehouses["warehouse" + newWareHouse.id] = newWareHouse;
 	console.log("--->After Post, warehouses:\n" + JSON.stringify(warehouses, null, 4));
-    res.end("Post Successfully: \n" + JSON.stringify(newWareHouse, null, 4));
+  res.end("Post Successfully: \n" + JSON.stringify(newWareHouse, null, 4));
 };
+
+//get info for specific warehouse
+exports.getOneWareHouse= function(req, res) {
+  let warehouse = warehouses["warehouse" + req.params.id];
+  console.log(req.params.id, "test")
+  res.end( "Find a warehouse:\n" + JSON.stringify(warehouse, null, 12));
+}
 
 //list all warehouses
 exports.listAllWareHouses = function(req, res) {
